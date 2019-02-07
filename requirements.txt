@@ -1,0 +1,7 @@
+pySerial
+numpy
+matplotlib
+scipy
+ipykernel
+pandas
+lmfit
