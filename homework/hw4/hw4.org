@@ -1,0 +1,8 @@
+#+TITLe: Homeowork 4
+#+Author: David James, UID: 304851938
+
+* Midterm Open Questions
+** Question 1
+   Why is there a systematic trned in the q(z) values? What controls this trend?
+** Question 2
+   What would happen to q if random noise was (realistically) included in this synthetic data set?
