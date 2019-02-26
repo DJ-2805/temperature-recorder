@@ -1,4 +1,4 @@
-from numpy import log
+from numpy import log,array
 from time import sleep
 from pyfirmata import Arduino, util
 
@@ -72,7 +72,7 @@ readHal():
         list of voltage reading from list of channels
 '''
 def readHal():
-    return [i.read()*5 for i in channels]
+    return array([i.read()*5 for i in channels])
 
 '''
 resiHal():
