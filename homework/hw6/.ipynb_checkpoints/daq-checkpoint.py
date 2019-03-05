@@ -1,4 +1,4 @@
-from numpy import log
+from numpy import log,zeros
 from time import sleep
 from pyfirmata import Arduino, util
 
@@ -6,7 +6,7 @@ from pyfirmata import Arduino, util
 port = '/dev/ttyUSB0'
 hal9001 = Arduino(port)
 
-# list of channels
+# channels
 channels = []
 
 '''
@@ -72,7 +72,7 @@ readHal():
         list of voltage reading from list of channels
 '''
 def readHal():
-    return [i.read()*5 for i in channels]
+    return array([i.read()*5 for i in channels])
 
 '''
 resiHal():
