@@ -4,6 +4,10 @@ from pyfirmata import Arduino, util
 from scipy.io import savemat
 import datetime as dt
 
+## NOTE
+# fix zero out in clean data
+# add time to class, so that all data is in one .mat file
+
 class DAQ:
     def __init__(self,port,resistor,duration,perSecondCount):
         self.board = Arduino(port)
@@ -20,6 +24,7 @@ class DAQ:
         for i in range(0,resLen):
             name = str(i)
             chan = Channel(self.board,name,resistor[i],duration,perSecondCount)
+            print('Channel '+name+':', chan.readVoltage(),'V')
             self.data[name] = chan.data
             self.channels.append(chan)
                 
@@ -35,7 +40,7 @@ class DAQ:
         
     def saveData(self):
         now = dt.datetime.now().strftime("%Y%m%d-%H%M")
-        savemat('data.mat',self.data)
+        savemat(now+'data.mat',self.data)
     
     def cleanData(self):
         for i in self.channels:
@@ -59,10 +64,11 @@ class Channel:
         return self.chan.read()*5
     
     def calcResistance(self,voltRead):
-        return voltRead/(self.voltTotal-voltRead)*self.r
+        return voltRead/(self.voltTotal-voltRead)*(self.r*1000)
     
     def calcTemperature(self,res,a,b,c,d):
-        return (a+b*log(res)+c*log(res)**2+d*log(res)**3)**(-1)
+        temp = (a+b*log(res)+c*log(res)**2+d*log(res)**3)**(-1)
+        return temp - 273.15
     
     def recoValue(self,index,value):
         self.data[index] = value
