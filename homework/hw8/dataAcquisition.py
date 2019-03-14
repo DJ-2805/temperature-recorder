@@ -4,10 +4,6 @@ from pyfirmata import Arduino, util
 from scipy.io import savemat
 import datetime as dt
 
-## NOTE
-# fix zero out in clean data
-# add time to class, so that all data is in one .mat file
-
 class DAQ:
     def __init__(self,port,resistor,duration,perSecondCount):
         self.board = Arduino(port)
@@ -38,13 +34,15 @@ class DAQ:
     def switchChannel(self,index):
         self.channels[index].flip()
         
-    def saveData(self):
+    def saveData(self,time):
         now = dt.datetime.now().strftime("%Y%m%d-%H%M")
+        self.data['time'] = time
         savemat(now+'data.mat',self.data)
     
     def cleanData(self):
-        for i in self.channels:
-            i.data = i.data[i.data != 0]
+        for i in range(0,len(self.channels)):
+            nonZeroIndex = (0 != self.channels[i])
+            self.channels[i] = channels[i][nonZeroIndex]
             
 class Channel:
     voltTotal = 5
