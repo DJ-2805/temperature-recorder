@@ -1,0 +1,9 @@
+numpy
+matplotlib
+scipy
+ipykernel
+pandas
+lmfit
+pyfirmata
+pandoc
+nbconvert
